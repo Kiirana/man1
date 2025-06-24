@@ -1,0 +1,2373 @@
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* Global Styles */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* 1) Remove underlines from buttons */
+/* 1) Ensure buttons use Stellar */
+
+
+.cta-buttons .btn {
+    font-family: 'Stellar', sans-serif;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 1rem 1.5rem;
+    border-radius: 40px;
+}
+
+.spline-follower{
+
+
+        width: 24vw; /* was 100vw */
+    left: 100%;
+
+
+
+
+}
+
+/* 2) Primary button: solid light-blue background + Stellar */
+.cta-buttons .btn.primary {
+    background: #0096FF;           /* medium-light blue */
+    color: #fff;                   /* white text */
+    border: 3px solid #00C8FF;     /* lighter blue outline */
+    box-shadow:
+            0 0 6px rgba(0,150,255,0.6),
+            0 0 12px rgba(0,200,255,0.4);
+    transition:
+            background 0.3s ease,
+            box-shadow 0.3s ease,
+            transform 0.3s ease;
+}
+
+.cta-buttons .btn.primary:hover {
+    background: #00C8FF;           /* brighten on hover */
+    box-shadow:
+            0 0 10px rgba(0,200,255,0.8),
+            0 0 20px rgba(0,255,255,0.6);
+    transform: translateY(-1px);
+}
+
+/* 3) Secondary button: transparent with light-blue border + Stellar */
+.cta-buttons .btn.secondary {
+    background: transparent;
+    color: #00C8FF;
+    border: 3px solid #00C8FF;
+    box-shadow:
+            inset 0 0 4px rgba(0,200,255,0.4),
+            0 0 6px rgba(0,200,255,0.4);
+    transition:
+            background 0.3s ease,
+            color 0.3s ease,
+            box-shadow 0.3s ease,
+            transform 0.3s ease;
+}
+
+.cta-buttons .btn.secondary:hover {
+    background: rgba(0,200,255,0.1);
+    color: #fff;
+    box-shadow:
+            0 0 10px rgba(0,200,255,0.6),
+            0 0 20px rgba(0,255,255,0.4);
+    transform: translateY(-1px);
+}
+
+
+/* 1) Load the “Stellar” font via @font-face (adjust paths as needed) */
+@font-face {
+    font-family: 'Stellar';
+    src: url('Stellar-light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Remove Poppins import since all text will now use “Stellar” */
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&display=swap'); */
+
+.animated,
+.astronaut,
+.neon-button,
+.neon-path {
+    will-change: var(--gpu-properties);
+}
+
+body {
+    margin: 0;
+    overflow: auto; /* Allow scrolling across scenes */
+    /* Changed from sans-serif to Stellar */
+    font-family: 'Stellar', sans-serif;
+    background: black;
+}
+
+/* Three.js Starfield Container (persistent background) */
+.scene-container,
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+}
+
+/* Astronaut: remains as previously styled */
+.astronaut {
+
+    width: 300px;
+    border-radius: 1em;
+    top: 25%; /* Adjust as needed */
+    transform: rotate(5deg);
+    animation:
+            bob 5s ease-in-out infinite,
+            rotateZ 5s ease-in-out infinite;
+    opacity: 1;
+    z-index: 5;
+    pointer-events: none;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+}
+
+@keyframes bob {
+    0%, 100% { transform: rotate(100deg); }
+    50%      { transform: rotate(100deg); }
+}
+@keyframes rotateZ {
+    0%, 100% { transform: rotate(5deg); }
+    50%      { transform: rotate(10deg); }
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(0,0,0,0.6);
+    z-index: 10;
+}
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+/* Links now inherit Stellar via body */
+.navbar nav a {
+    margin-left: 1.5rem;
+    color: var(--clr-txt);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* ─── Hero / Szene 1 ─── */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Overlay for Scene 1 */
+.overlay {
+    /* no more fixed - let GSAP move it */
+    will-change: transform; /* parallax = translateY, so hint the GPU */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    pointer-events: auto;
+}
+.overlay h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Typewriter styling: changed from monospace to Stellar */
+.typewriter {
+    position: fixed; /* stays put even if the page scrolls back up */
+    top: 5vw;       /* flush with the top edge of the viewport */
+    left: 50%;      /* centre horizontally */
+    transform: translateX(-50%);
+    font-size: 5rem;
+    font-weight: 300;
+    /* Changed from monospace to Stellar */
+    font-family: 'Stellar', sans-serif;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    letter-spacing: 0.15em;
+    width: 0;
+    animation: typing 2.8s steps(20, end) forwards, lights 4s linear infinite;
+    align-self: center;
+    text-align: center;
+}
+@keyframes typing {
+    from { width: 0; }
+    to   { width: 55%; }
+}
+@keyframes lights {
+    0% {
+        color: hsl(230, 40%, 80%);
+        text-shadow:
+                0 0 1em hsla(320, 100%, 50%, 0.2),
+                0 0 0.125em hsla(320, 100%, 60%, 0.3),
+                -1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
+                1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
+    }
+    30% {
+        color: hsl(230, 80%, 90%);
+        text-shadow:
+                0 0 1em hsla(320, 100%, 50%, 0.5),
+                0 0 0.125em hsla(320, 100%, 60%, 0.5),
+                -0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
+                0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+    }
+    40% {
+        color: hsl(230, 100%, 95%);
+        text-shadow:
+                0 0 1em hsla(320, 100%, 50%, 0.5),
+                0 0 0.125em hsla(320, 100%, 90%, 0.5),
+                -0.25em -0.125em 0.125em hsla(40, 100%, 60%, 0.2),
+                0.25em 0.125em 0.125em hsla(200, 100%, 60%, 0.4);
+    }
+    70% {
+        color: hsl(230, 80%, 90%);
+        text-shadow:
+                0 0 1em hsla(320, 100%, 50%, 0.5),
+                0 0 0.125em hsla(320, 100%, 60%, 0.5),
+                0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
+                -0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+    }
+    100% {
+        color: hsl(230, 40%, 80%);
+        text-shadow:
+                0 0 1em hsla(320, 100%, 50%, 0.2),
+                0 0 0.125em hsla(320, 100%, 60%, 0.3),
+                1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
+                -1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
+    }
+}
+
+.features h2,
+.features li h3 {
+    color: var(--clr-typewriter); /* entspricht hsl(230,40%,80%) */
+    animation: slideFadeIn 1s ease-out forwards;
+    text-shadow:
+            0 0 0.5em hsla(230,100%,85%,0.7),
+            0 0 0.2em hsla(230,100%,85%,0.5);
+}
+/* Keyframe-Farben aus „lights“ */
+.features li:nth-child(1) h3 { color: hsl(230, 40%, 80%); }
+.features li:nth-child(2) h3 { color: hsl(230, 80%, 90%); }
+.features li:nth-child(3) h3 { color: hsl(230,100%, 95%); }
+
+.neon-button.show {
+    opacity: 1;
+    transform: translateY(0);
+    font-family: 'Stellar', sans-serif;
+}
+.neon-button::before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    background: var(--clr-neon);
+    top: 120%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+    filter: blur(1em);
+    opacity: 0.7;
+}
+.neon-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 2em 0.5em var(--clr-neon);
+    opacity: 0;
+    background-color: var(--clr-neon);
+    z-index: -1;
+    transition: opacity 100ms linear;
+    font-family: 'Stellar', sans-serif;
+}
+.neon-button:hover,
+.neon-button:focus {
+    color: var(--clr-bg);
+    text-shadow: none;
+}
+.neon-button:hover::before,
+.neon-button:focus::before {
+    opacity: 1;
+}
+.neon-button:hover::after,
+.neon-button:focus::after {
+    opacity: 1;
+}
+
+:root {
+    --clr-neon: hsl(230, 100%, 85%);
+    --clr-bg: hsl(240, 21%, 10%);
+    --clr-typewriter: hsl(230, 40%, 80%);
+    --clr-txt: #fff;
+    --gap: 2rem;
+    --gpu-properties: transform, opacity;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* ─── Divider ─── */
+.divider {
+    display: block;
+    width: 100%;
+    height: 4rem;
+    margin-top: -2px;
+}
+
+/* ─── Features ─── */
+.features {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+.features h2 {
+    margin-bottom: 2rem;
+}
+.features ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap);
+    justify-content: center;
+    list-style: none;
+}
+.features li {
+    flex: 1 1 16rem;
+    padding: 2rem;
+    border-radius: .5rem;
+}
+.features .icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+.features h2,
+.features li h3,
+.features li p {
+    color: var(--clr-typewriter); /* hsl(230,40%,80%) wie im lights-Keyframe */
+    font-size: 22px;
+}
+
+/* Replace the old .features .icon rule */
+.features .icon {
+    display: block;           /* so width/height take effect */
+    width: 5rem;
+    height: 5rem;
+    margin: 0 auto 1rem;     /* center horizontally & keep bottom spacing */
+    border-radius: 50%;       /* makes the image perfectly round */
+    object-fit: cover;        /* crop/scale to fill the circle */
+}
+
+/* If you still want a fallback for emoji icons (optional) */
+.features .icon::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+
+/* Scene 2 Improvements */
+.scene-2 {
+    contain: layout paint;
+    position: relative;
+    min-height: 200vh; /* Ensure enough scroll space */
+    width: 100%;
+    margin-top: 100vh;
+    z-index: 2; /* Above starfield */
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+
+/* SVG Container */
+.svg-container {
+    position: sticky;
+    top: 50vh;
+    width: 80%;
+    height: 20vh;
+    margin: 0 auto;
+    transform: translateY(-50%);
+}
+svg {
+    width: 100%;
+    height: 100%;
+    shape-rendering: optimizeSpeed;
+}
+
+/* Add these adjustments */
+.svg-container {
+    perspective: 1000px;
+}
+path {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.scroll-star {
+    width: 500px;
+    height: auto;
+}
+
+.neon-path {
+    --neon-color: hsl(230, 100%, 85%);
+    animation: path-glow 2s ease-in-out infinite;
+}
+
+@keyframes path-glow {
+    0%, 100% { stroke-width: 4; opacity: 0.8; }
+    50%      { stroke-width: 6; opacity: 1; }
+}
+
+/* Add to existing CSS */
+.scroll-star {
+    filter:
+            drop-shadow(0 0 10px var(--clr-neon))
+            drop-shadow(0 0 20px var(--clr-neon));
+    animation: star-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes star-pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.2); }
+}
+
+svg path {
+    /* Add path position correction */
+    transform: translate(2px, 1.5px);
+}
+
+.spline-glasses canvas {
+    cursor: default !important;
+}
+
+/* Spline Container Styles */
+.spline-viewer {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 20px rgba(173, 216, 230, 0.5));
+}
+
+/* ─── Reposition + restyle CTA container ─── */
+.nasa-cta-container {
+    position: fixed;
+    /* move up to about 20% from top, centered horizontally */
+    top: 24%;
+    left: 10%;
+    transform: translateX(-50%);
+    z-index: 6;             /* above most content */
+    width: 90%;             /* nearly full width on mobile */
+    max-width: 490px;       /* cap on larger screens */
+    padding: 2rem 1.5rem;
+
+    border-radius: 1rem;
+    box-shadow:
+            0 0 10px rgba(0,150,255,0.4),
+            0 0 20px rgba(0,150,255,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;            /* start hidden, GSAP will fade in */
+    pointer-events: none;  /* disabled until animation end */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.nasa-cta-container.show {
+    opacity: 1;
+    pointer-events: auto;
+    /* you can optionally slide it slightly upward as it appears */
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.nasa-cta-text h4 {
+    font-size: 2.25rem;                   /* a bit larger */
+    margin: 0 0 0.5rem;
+    font-family: 'Stellar', sans-serif;
+    color: #fff;
+    text-shadow:
+            0 0 0.5em hsla(230,100%,85%,0.8),
+            0 0 0.2em hsla(230,100%,85%,0.5);
+}
+/* hide the “Built with Spline” badge/button */
+button[aria-label="Built with Spline"],
+button[title="Built with Spline"],
+.spline-viewer__branding {
+    display: none !important;
+}
+
+.spline-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    /* anchor at the middle of the viewport */
+    top: 37%;
+    left: 12%;
+    /* size it relative to viewport */
+    width: 100vw;
+    height: calc(90vw * (400 / 600)); /* preserve original 600×400 aspect ratio */
+    /* really center it */
+    transform: translateY(-50%);
+    /* start hidden/unclickable */
+    opacity: 0;
+
+    z-index: 6;
+    /* flex won’t hurt, but it’s optional here */
+    justify-content: center;
+    transition:
+            opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+            transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    gap: 1rem; /* Abstand zwischen Bild & Text-Block */
+}
+
+#splineBox .spline-model {
+    width: 60vw;      /* 60% der Viewport-Breite */
+    max-width: 700px; /* oberes Limit, damit’s nicht zu groß wird */
+    height: auto;     /* Seitenverhältnis bleibt erhalten */
+    border-radius: 0.5rem;
+    filter: drop-shadow(0 0 20px var(--clr-neon)); /* schöner Neon-Glow */
+}
+#splineBox .nasa-cta-text {
+    margin-bottom: 0.5rem; /* weniger Abstand unter dem Text-Block */
+}
+#splineBox .nasa-cta-text h2 {
+    margin-bottom: 0.25rem; /* Titel näher an der Tagline */
+}
+#splineBox .nasa-cta-text p {
+    margin-bottom: 0.5rem; /* Tagline näher an den Buttons */
+}
+#splineBox .cta-buttons {
+    gap: 0.5rem;
+    display: inline-block; /* Buttons enger zusammen */
+}
+#splineBox .cta-buttons .btn {
+    font-size: 2rem;        /* larger text  */
+    padding: 1.25rem 3rem;  /* more “meat”  */
+    border-radius: 60px;    /* keep the pill look proportionate */
+}
+
+/* optionally give each one its own min-width so they match */
+#splineBox .btn.primary,
+#splineBox .btn.secondary {
+    min-width: 220px;
+}
+
+/* ─── 2) Glowing Shadow für die Brille ─── */
+#splineBox img {
+    /* blauer Neon‐Glow passend zu den Text-Effekten */
+    box-shadow:
+            0 0 10px var(--clr-neon),
+            0 0 20px var(--clr-neon),
+            0 0 30px var(--clr-neon);
+}
+
+/* Optional: falls Du dem Bild noch eine leichte Kontur geben willst */
+
+.nasa-logo {
+    position: fixed;       /* lock it to the viewport */
+    top: 20px;
+    left: 20px;            /* ⬅ corner placement */
+    width: 100px;
+    max-width: 45vw;
+    margin: 0;             /* override previous margin-bottom */
+    filter: drop-shadow(0 0 15px var(--clr-neon));
+    z-index: 11;           /* above most content but below GUI */
+    pointer-events: none;  /* purely decorative */
+}
+
+/* ─── Button container: stack vertically on mobile ─── */
+.cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+
+.nasa-cta-text {
+    text-align: center;
+    /* Changed from monospace to Stellar */
+    font-family: 'Stellar', sans-serif;
+    color: var(--clr-typewriter);
+    animation: slideFadeIn 1s ease-out forwards;
+    text-shadow:
+            0 0 0.5em hsla(230,100%,85%,0.7),
+            0 0 0.2em hsla(230,100%,85%,0.5);
+}
+
+.nasa-cta-text h2 {
+    font-size: 2.5rem;
+    margin: 0.5em 0;
+    border-bottom: 2px solid var(--clr-typewriter);
+    display: inline-block;
+    animation: slideFadeIn 1s ease-out forwards;
+    text-shadow:
+            0 0 0.5em hsla(230,100%,85%,0.7),
+            0 0 0.2em hsla(230,100%,85%,0.5);
+}
+
+.nasa-cta-text .tagline {
+    font-size: 10rem;
+    line-height: 1.4;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.hidden {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100%);
+    transition: all 1s;
+}
+
+.show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+}
+
+@media (prefers-reduced-motion) {
+    .hidden {
+        transition: none;
+    }
+}
+
+.spline-container spline-viewer,
+.spline-container canvas {
+    /* a bright white drop-shadow + a touch of extra brightness */
+    filter:
+            drop-shadow(0 0 20px rgba(255,255,255,0.8))
+            brightness(1.2);
+}
+
+/* ─── Testimonials ─── */
+
+/* ─── FAQ Sektion ─── */
+.faq h2 {
+    color: var(--clr-typewriter); /* gleiche Neon-Farbe wie Typewriter */
+    animation: slideFadeIn 1s ease-out forwards;
+    text-shadow:
+            0 0 0.5em hsla(230,100%,85%,0.7),
+            0 0 0.2em hsla(230,100%,85%,0.5);
+    margin-bottom: 1.5rem;
+}
+
+.faq details {
+    background: rgba(255,255,255,0.05);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+}
+
+.faq summary {
+    color: var(--clr-typewriter);
+    font-weight: 500;
+    cursor: pointer;
+    list-style: none; /* entfernt den Standard-Pfeil */
+    position: relative;
+}
+
+/* Pfeil-Marker einfärben */
+.faq summary::marker { /* Firefox */
+    color: var(--clr-typewriter);
+}
+.faq summary::-webkit-details-marker { /* WebKit/Blink */
+    color: var(--clr-typewriter);
+}
+
+.faq summary:hover {
+    text-shadow:
+            0 0 0.5em hsla(230,100%,85%,0.7),
+            0 0 0.2em hsla(230,100%,85%,0.5);
+}
+
+.faq details p {
+    color: #ffffff;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
+.testimonials h2 {
+    color: var(--clr-typewriter);
+    animation: slideFadeIn 1s ease-out forwards;
+    text-shadow:
+            0 0 0.5em hsla(230,100%,85%,0.7),
+            0 0 0.2em hsla(230,100%,85%,0.5);
+    margin-bottom: 2rem;
+}
+.testimonials blockquote {
+    color: var(--clr-typewriter);
+}
+
+.testimonials {
+    padding: 4rem 2rem;
+    text-align: center;
+    transform: translateY(25%);
+
+}
+.testimonials blockquote {
+    background: rgba(255,255,255,0.05);
+    padding: 2rem;
+    margin: 1rem 0;
+    border-left: 4px solid var(--clr-neon);
+}
+.testimonials cite {
+    display: block;
+    text-align: right;
+    margin-top: 1rem;
+}
+
+/* ─── FAQ ─── */
+.faq {
+    padding: 4rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.faq h2 {
+    text-align: center;
+}
+
+.faq details {
+    background: rgba(255,255,255,0.05);
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: .5rem;
+    text-align: center;
+}
+.faq summary {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* ─── Footer ─── */
+.footer {
+    background: rgba(0,0,0,0.8);
+    padding: 2rem;
+    text-align: center;
+}
+.footer-links a {
+    margin: 0 .5rem;
+    color: var(--clr-txt);
+    text-decoration: none;
+}
+.social img {
+    width: 1.5rem;
+    margin: 0 .5rem;
+}
+
+/* ─── Utility ─── */
+.hidden {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100%);
+    transition: all 1s;
+}
+.show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+}
+@media (prefers-reduced-motion) {
+    .hidden {
+        transition: none;
+    }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* GLASSES DETAILS SECTION (static Neon-Dark style) */
+/* ─────────────────────────────────────────────────────────────────────────── */
+.neon-button {
+    font-family: 'Britannic Bold', sans-serif;
+    position: relative;
+    display: inline-flex;            /* flex centering */
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--clr-neon);
+    border: 0.125em solid var(--clr-neon);
+    padding: 0.3em 1em;              /* more vertical padding */
+    border-radius: 0.3em;
+    text-shadow:
+            0 0 0.25em hsl(0 0% 100% / 0.3),
+            0 0 0.2em currentColor;
+    box-shadow:
+            inset 0 0 0.5em var(--clr-neon),  /* dimmer inset glow */
+            0 0 0.5em var(--clr-neon);         /* dimmer outer glow */
+    pointer-events: auto;
+    top: 76%;
+    left: 31.7%;
+}
+
+/* Reflection underneath (unchanged) */
+.neon-button::before {
+    content: "";
+    position: absolute;
+    bottom: -0.6em;
+    left: 50%;
+    width: 120%;
+    height: 0.4em;
+    background: var(--clr-neon);
+    transform: translateX(-50%) perspective(1em) rotateX(90deg);
+    filter: blur(20px);     /* slightly less blur */
+    opacity: 1;          /* more subtle */
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Hover glow */
+.neon-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: 0 0 1em 0.25em var(--clr-neon); /* dimmer hover glow */
+    background-color: var(--clr-neon);
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.neon-button:hover,
+.neon-button:focus {
+    color: var(--clr-bg);
+    text-shadow: none;
+}
+
+.neon-button:hover::after,
+.neon-button:focus::after {
+    opacity: 0.6;  /* reveal a more subtle hover glow */
+}
+
+
+.glasses-details {
+    /* Layout */
+    padding: 1.8rem 2rem;
+
+    max-width: 800px;
+    margin: -30rem auto 0;
+    background: rgba(255,255,255,0.05);
+    border-radius: 0.75rem;
+
+    /* Changed from "Poppins" to "Stellar" */
+    color: var(--clr-typewriter);
+    font-family: 'Stellar', sans-serif;
+    line-height: 1.4;
+
+    /* Remove any previous animations */
+    animation: none !important;
+    transform: translateY(230px);  /* slide it down 200px */
+    position: relative;
+}
+
+.glasses-details h3 {
+    /* Heading */
+    text-align: center;
+    font-size: 3rem;
+
+    color: var(--clr-typewriter);
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    animation: slideFadeIn 1s ease-out forwards;
+    text-shadow:
+            0 0 0.5em hsla(230,100%,85%,0.7),
+            0 0 0.2em hsla(230,100%,85%,0.5);
+}
+
+.glasses-details table {
+    /* Table layout */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.glasses-details th,
+.glasses-details td {
+    /* Cells */
+    padding: 1rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--clr-typewriter);
+}
+
+.glasses-details th {
+    /* Header row */
+    background: rgba(255,255,255,0.1);
+    color: var(--clr-neon);
+    font-weight: 600;
+    text-align: left;
+}
+
+.glasses-details tr:nth-child(even) td {
+    /* Alternating row background */
+    background: rgba(255,255,255,0.02);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* Neon-Dark Themed Footer */
+/* ─────────────────────────────────────────────────────────────────────────── */
+.nasa-footer {
+    background: var(--clr-bg); /* deep-space background */
+    color: var(--clr-typewriter); /* same as your intro text */
+    padding: 3rem 1.5rem;
+    /* Changed from "Poppins" to "Stellar" */
+    font-family: 'Stellar', sans-serif;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Simplified transparent-black footer */
+.nasa-footer {
+    background: rgba(0, 0, 0, 0.6); /* transparent black */
+    color: var(--clr-typewriter);
+    padding: 2rem 1rem;
+    text-align: center;
+    /* Changed from "Poppins" to "Stellar" */
+    font-family: 'Stellar', sans-serif;
+}
+
+.nasa-footer .footer-links,
+.nasa-footer .footer-bottom {
+    margin-bottom: 1rem;
+}
+
+.nasa-footer a {
+    color: var(--clr-typewriter);
+    text-decoration: none;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.nasa-footer a:hover {
+    color: var(--clr-neon);
+}
+
+.nasa-footer .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 1rem;
+    font-size: 0.85rem;
+}
+
+/* ─── Deutscher CTA-Stil mit Neon-Akzenten ─── */
+.nasa-cta-text h2 {
+    color: var(--clr-neon);
+    font-size: 2.5rem;
+    margin: 0;
+    border-bottom: 2px solid var(--clr-neon);
+    /* Changed from default to Stellar */
+    font-family: 'Stellar', sans-serif;
+}
+
+.nasa-cta-text .tagline {
+    color: var(--clr-typewriter);
+    /* Changed from default to Stellar */
+    font-family: 'Stellar', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin-top: 0.5rem;
+    opacity: 0.9;
+}
+
+/* ─── Utility ─── */
+.hidden {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100%);
+    transition: all 1s;
+}
+.show {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+}
+@media (prefers-reduced-motion) {
+    .hidden {
+        transition: none;
+    }
+}
+
+.content {
+    font-size: 4rem;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    transform: translate(-50%, -50%);
+    /* Changed from "Lucida Console" to "Stellar" (monospace fallback) */
+    font-family: 'Stellar', monospace;
+}
+.content p {
+    margin: 0 0 20px;
+}
+
+/* Arrow & Hover Animation */
+#more-arrows {
+    width: 75px;
+    height: 65px;
+}
+#more-arrows:hover polygon {
+    fill: #FFF;
+    transition: all .2s ease-out;
+}
+#more-arrows:hover .arrow-bottom {
+    transform: translateY(-18px);
+}
+#more-arrows:hover .arrow-top {
+    transform: translateY(18px);
+}
+
+polygon {
+    fill: #FFF;
+    transition: all .2s ease-out;
+}
+.arrow-middle {
+    opacity: 0.75;
+}
+.arrow-top {
+    opacity: 0.5;
+}
+.neon-arrow {
+    position: fixed; /* ← viewport-relative */
+    top: 86%;        /* 30 % of the screen’s height */
+    left: 47%;
+    width: 4rem;
+    height: 4rem;
+    fill: var(--clr-neon);
+    overflow: visible;
+    cursor: pointer;
+    filter:
+            drop-shadow(0 0 4px var(--clr-neon))
+            drop-shadow(0 0 10px var(--clr-neon));
+    z-index: 100;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+/* “Why Buy” Promo Box Styles (already shown above) */
+/* just keeping here for completeness; already defined earlier */
+#glassesPromo {
+    /* ... */
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+
+/* Container 2: similar to .nasa-cta-container.hidden */
+#nasaCta2 {
+    position: fixed;
+    top: 23%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    width: 90%;
+    max-width: 480px;
+    padding: 1.5rem;
+    background: rgba(10, 10, 30, 0.85);
+    border-radius: 1rem;
+    box-shadow:
+            0 0 15px rgba(0, 255, 255, 0.5),
+            0 0 30px rgba(0, 150, 255, 0.3);
+    display: flex;
+    justify-content: center;
+    opacity: 0;            /* start hidden */
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#nasaCta2.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(-10px);
+}
+.spline-follower2{
+    position: fixed;
+
+    /* horizontale Zentrierung --------------------------- */
+    left: 0;                     /* beide Seiten anlegen  */
+    right: 0;
+    margin-left: auto;           /* und via auto-Margin   */
+    margin-right: auto;          /* in die Mitte schieben */
+
+    /* vertikale Zentrierung ----------------------------- */
+    top: 50%;                    /* Mittelpunkt des Viewports  */
+    transform: translateY(-50%); /* Hälfte der Höhe nach oben  */
+
+    /* Größe --------------------------------------------- */
+    width: min(90vw, 1600px);    /* 90 % Breite, aber nie >1 600 px */
+    aspect-ratio: 16 / 9;        /* Höhe ergibt sich automatisch   */
+
+    /* Styling (deins) ----------------------------------- */
+    filter: drop-shadow(0 0 25px var(--clr-neon));
+    border-radius: 1rem;         /* optional */
+    overflow: hidden;
+    z-index: 6;
+}
+
+/* spline-follower3: white shadow + glowing cyan-blue box */
+.spline-follower3 {
+    width: 100vw;
+    position: fixed;
+    /* move up to about 20% from top, centered horizontally */
+    top: 10.1%;
+    left: 67%;
+    transform: translateX(-50%);
+    z-index: 6;             /* above most content */
+             /* nearly full width on mobile */
+    max-width: 720px;       /* cap on larger screens */
+
+    aspect-ratio: 16/9;
+  /* faint cyan tint */
+    border: 2px solid whitesmoke;         /* bright cyan border */
+    border-radius: 0.8rem;
+    box-shadow:
+            0 0 8px rgba(255, 255, 255, 0.4),  /* soft white glow behind */
+            0 0 12px rgba(0, 255, 255, 0.6),    /* cyan glow */
+            0 0 26px rgba(0, 200, 255, 0.4);
+    overflow: hidden;
+    filter:drop-shadow(0 0 25px var(--clr-neon));
+}
+.spline-follower4 {
+    /* same placement you had at the start */
+    position: fixed;
+    top: 39.9%;
+    left: 63%;
+    transform: translateX(-50%);
+
+    /* ORIGINAL dimensions */
+    width: 100%;          /* full width of its containing block */
+    max-width: 860px;     /* cap so it never grows past 860 px */
+    aspect-ratio: 16 / 9; /* keep the cinematic ratio */
+
+    /* styling that was already there */
+    border: 2px solid whitesmoke;
+    border-radius: 0.8rem;
+    box-shadow:
+            0 0 8px  rgba(255,255,255,0.4),
+            0 0 12px rgba(0,255,255,0.6),
+            0 0 26px rgba(0,200,255,0.4);
+    filter: drop-shadow(0 0 25px var(--clr-neon));
+    z-index: 7;
+    pointer-events: none; /* (your children regain events via the next rule) */
+}
+.spline-follower4 spline-viewer,
+.spline-follower4 canvas {
+    pointer-events: auto;
+}
+.spline-follower4 spline-viewer {
+    position: absolute;       /* so we can move it around */
+    top: 33%; left: 51%;      /* start centered */
+               /* scale up to 120% of the wrapper */
+    height: 120%;
+    transform: translate(-50%, -50%);  /* keep it centered */
+}
+
+/* Ensure the spline-viewer fills its parent */
+.spline-follower3 spline-viewer,
+.spline-follower3 canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.spline-follower5 canvas {
+    pointer-events: auto;
+}
+.spline-follower5 {
+    position: fixed;
+    top: 55.4%;
+    left: 31%;
+    transform: translateX(-50%);
+    z-index: 7;
+    width: 700px;           /* match your slide width */
+    height: 460px;          /* match your slide height */
+    max-width: 90vw;        /* responsive cap */
+    max-height: 90vh;
+    border: 2px solid whitesmoke;
+    border-radius: 0.8rem;
+    box-shadow:
+            0 0 8px rgba(255,255,255,0.4),
+            0 0 12px rgba(0,255,255,0.6),
+            0 0 26px rgba(0,200,255,0.4);
+    filter: drop-shadow(0 0 25px var(--clr-neon));
+    overflow: hidden;
+    pointer-events: auto;
+}
+.spline-follower5 .ci:nth-of-type(1) img {
+    object-position: center 20%;
+}
+.spline-follower5 .ci:nth-of-type(2) img {
+    object-position: center 20%;
+}
+.spline-follower5 .ci:nth-of-type(3) img {
+    object-position: center 20%;
+}
+
+
+
+h1 {
+    color: lightblue;
+
+    position: fixed;
+    left: -100px;
+    top: 50%;
+    margin: 0;
+
+    transform: rotate(-90deg) translateY(-50%);
+}
+
+
+
+/* C */
+/* ========================================================================== */
+.c {
+    min-width: 700px;
+    width: 700px;
+    height: 460px;
+    border-radius: 12px;
+    padding: 20px;
+    padding-bottom: 40px;
+    box-shadow: 0 8px 48px 2px hsla(10 6% 15% / .4);
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+    background: hsl(0 0% 90%);
+
+    box-sizing: border-box;
+}
+
+.ci {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: left 50%;
+    transition: .3s ease-out;
+}
+
+/* 4) Scale & crop the img to cover the slide area */
+.ci img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    /* fill while preserving aspect */
+    display: block;
+    user-select: none;
+}
+
+.ch {
+    position: absolute;
+    top: 70%;
+    left: 4%;
+    transform: translateY(-50%);
+
+    font-size: 2rem;
+    color: hsla(var(--h) var(--s) var(--l) / .8);
+    text-shadow: 0 2px 10px hsla(var(--h) var(--s) 10% / .3);
+}
+
+input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    z-index: -10;
+}
+
+label {
+    width: 10%;
+    height: 10px;
+    margin-right: 4px;
+    border-radius: 20px;
+
+    background: hsla(0 0% 90% / .3);
+    cursor: pointer;
+
+    position: relative;
+    z-index: 10;
+}
+
+label:last-child {
+    margin-right: 0;
+}
+
+
+
+input:not(:checked)+label+.ci {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+input:checked+label+.ci~.ci {
+    transform: translateX(100%);
+}
+
+
+/* Lighter, rounder labels with subtle glow */
+.spline-follower5 label {
+    width: 1rem;
+    height: 1rem;
+    margin: 0 0.75rem;
+    display: inline-block;
+    background: #66C0FF;                     /* lighter blue */
+    border: 2px solid #99D6FF;               /* pale-blue outline */
+    border-radius: 50%;                      /* perfect circle */
+    box-shadow:
+            0 0 4px rgba(102,192,255,0.5),         /* soft outer glow */
+            inset 0 0 3px rgba(153,214,255,0.3);   /* gentle inner light */
+    cursor: pointer;
+    transition:
+            transform 0.2s ease,
+            background 0.3s ease,
+            box-shadow 0.3s ease;
+}
+
+/* Hover: brighten & pop */
+.spline-follower5 label:hover {
+    background: #99D6FF;
+    box-shadow:
+            0 0 8px rgba(153,214,255,0.7),
+            inset 0 0 4px rgba(153,214,255,0.5);
+    transform: scale(1.3);
+}
+
+/* Checked state gradient + glow */
+.spline-follower5 input:checked + label {
+    background: linear-gradient(
+            to right,
+            #99D6FF 20%,
+            #66C0FF 80%
+    );
+    box-shadow:
+            0 0 10px rgba(102,192,255,0.8),
+            inset 0 0 5px rgba(153,214,255,0.6);
+    transform: scale(1.2);
+}
+
+
+@media (max-width: 767px) {
+
+
+    .nasa-logo {
+        width: 70px;
+        top: 10px;
+        left: 10px;
+    }
+
+        .neon-arrow{
+            left: 47%;                 /* Mitte des Viewports */
+            transform: translateX(-50%); /* exakte Zentrierung */
+
+        }
+
+
+    .spline-follower3{
+        /* vom “festen” Scene-2-Layout entkoppeln … */
+        position:fixed  ;          /* bezieht sich jetzt auf .overlay */
+        z-index: 9000;              /* oberhalb der übrigen Overlay-Elemente */
+        margin: 8vh auto 0;
+        /*  im oberen Drittel der Viewport-Höhe platzieren  */
+        top: 33%;                   /* vertikale Lage als Anteil der Viewport-Höhe */
+        left: 50%;
+        transform: translate(-50%,-50%);  /* sauber zentrieren */
+
+        /*  Responsive Größen rein prozentual / view-*  */
+        width: 98vw;                /* fast volle Breite – mit seitlichem Rand */
+        max-width: 480px;           /* Schutz-Limit für große Phablets */
+        aspect-ratio: 16 / 9;       /* behält Proportionen bei */
+        height: auto;               /* ergibt sich über aspect-ratio */
+
+        /*  Rahmen & Glow kannst du natürlich beibehalten … */
+        border-radius: .8rem;
+        border: 2px solid #fff;
+        box-shadow:
+                0 0 8px rgba(255,255,255,.4),
+                0 0 12px rgba(0,255,255,.6),
+                0 0 26px rgba(0,200,255,.4);
+
+        /*  Optional: Shadow im Hochkant etwas sanfter  */
+        filter: drop-shadow(0 0 15px var(--clr-neon));
+
+        /*  Pointer-Events bleiben aktiv, falls du etwas anklicken musst  */
+        pointer-events: auto;
+    }
+
+
+
+
+    .spline-follower2
+   {
+        filter:drop-shadow(0 0 25px var(--clr-neon));
+        position: relative !important;
+        width: 100% !important;
+        height: 50vh !important;
+        left: 0 !important;
+        top: 0 !important;
+        transform: none !important;
+        margin: 30px auto !important;
+
+        border-radius: 16px;
+        overflow: hidden;
+
+    }
+
+
+    /* Typewriter adjustments */
+    .typewriter {
+        font-size: 1.6rem;
+        top: 15vw;
+        animation: typing-mobile 2.8s steps(20, end) forwards,
+        lights-mobile 4s linear infinite;
+        width: 90%;
+        text-align: center;
+        white-space: normal;
+    }
+
+    @keyframes typing-mobile {
+        from { width: 0; }
+        to   { width: 90%; }
+    }
+
+    @keyframes lights-mobile {
+        0%, 100% {
+            color: hsl(230, 40%, 80%);
+            text-shadow: 0 0 0.5em hsla(230,100%,85%,0.7);
+        }
+        50% {
+            color: hsl(230, 80%, 90%);
+            text-shadow: 0 0 0.8em hsla(230,100%,85%,0.9);
+        }
+    }
+    /* Glasses details */
+    .glasses-details {
+        margin-top: 100px;
+        transform: none;
+        padding: 15px;
+    }
+
+    .glasses-details h3 {
+        font-size: 2rem;
+
+    }
+
+    .glasses-details table {
+        font-size: 0.7rem;
+    }
+
+
+    /* Neon button */
+    .neon-button {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin: 20px auto;
+        display: block;
+        font-size: 1.5rem;
+        padding: 15px 30px;
+        width: 80%;
+        text-align: center;
+    }
+
+    /* Testimonials */
+    .testimonials {
+        transform: none;
+        padding: 30px 20px;
+        display: none;
+    }
+    .faq {
+        display: none;
+    }
+
+
+    .spline-follower{
+
+
+        width: 35vw; /* was 100vw */
+        left: 100%;
+
+    }
+
+    /* 3-D viewer wrapper -------------------------------------------- */
+    .spline-follower4 {
+        position: fixed;                 /* stay on top of the scroll */
+        top: 65%;                        /* roughly mid-screen */
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-bottom: 400px;
+
+        width: 100vw;                     /* responsive, almost full */
+        max-width: 800px;                /* safety cap */
+        aspect-ratio: 16 / 9;            /* keeps the Spline clean */
+
+        border: 10px solid #fff;
+        border-radius: 3rem;
+        box-shadow:
+                0 0 6px rgba(255,255,255,.4),
+                0 0 14px rgba(0,255,255,.5);
+        overflow: hidden;                /* crops the canvas bleed */
+        z-index: 7;
+    }
+
+    /* make sure the viewer fills the shell */
+    .spline-follower4 spline-viewer,
+    .spline-follower4 canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        pointer-events: auto;
+    }
+
+    .features{
+        /* vorhandenes Padding kannst du beibehalten */
+        padding: 4rem 2rem;
+        /* sorgt dafür, dass der UL-Block exakt mittig sitzt */
+        display: flex;
+        justify-content: center;
+    }
+
+    /* (2) UL als flex-Grid begrenzen und mittig ausrichten */
+    .features > ul{
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gap);
+        justify-content: center;       /* horizontal bündig  */
+        max-width: 60rem;              /* 👉 breiter View = gleichmäßige Zeilen */
+        margin: 0 auto;                /* wirklich mittig    */
+        padding: 0;                    /* Browser-Default rausnehmen */
+        list-style: none;              /* bullets entfernen  */
+    }
+
+    /* (3) Einzelne Karten gleich groß & Inhalt zentriert   */
+    .features li{
+        flex: 0 1 18rem;               /* feste Kartengröße  */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;            /* Headline + Text    */
+        padding: 2rem;
+        border-radius: .5rem;
+    }
+
+    /* (4) Icon exakt mittig – egal, ob Bild oder Emoji     */
+    .features .icon{
+        width: 5rem;
+        height: 5rem;
+        margin: 0 0 1rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    /* ---------- Mobile-Feinschliff ----------------------- */
+    @media (max-width: 767px){
+        .features > ul{
+            max-width: 100%;           /* volle Breite nutzen */
+        }
+        .features li{
+            flex: 1 1 100%;            /* Karten stapeln      */
+        }
+    }
+
+    /* neon CTA button ----------------------------------------------- */
+    .spline-follower4 .neon-button {
+        position: absolute;
+        bottom: 2%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.1rem;
+        padding: 0.6rem 0.5rem;
+        border-radius: 500px;
+    }
+
+    .nasa-cta-container {
+        /* stay fixed, but centre horizontally and sit a bit lower */
+        position: fixed;
+        top: 40%;
+        left: 20%;
+
+
+
+        width: 90vw;          /* almost full width */
+        max-width: 310px;     /* safety cap on large phones */
+        padding: 1.25rem 1rem;
+
+        /* subtler glow on small screens */
+        box-shadow:
+                0 0 6px  rgba(0,150,255,0.35),
+                0 0 16px rgba(0,150,255,0.25);
+    }
+
+    /* slightly smaller text */
+    .nasa-cta-text h4       { font-size: 1.6rem; }
+    .nasa-cta-text .tagline { font-size: 1rem;   }
+
+    /* buttons: slimmer pills */
+    .cta-buttons .btn {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+    }
+
+    .astronaut {
+
+        width: 150px;
+        border-radius: 1em;
+        top: 25%; /* Adjust as needed */
+        transform: rotate(5deg);
+        animation:
+                bob 5s ease-in-out infinite,
+                rotateZ 5s ease-in-out infinite;
+        opacity: 1;
+        z-index: 5;
+        pointer-events: none;
+        filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+    }
+
+
+}
+
+@media (max-width: 767px) {          /* ⬅ adjust the breakpoint if you like */
+    /* hide only the first two feature cards on narrow screens */
+    /*.features ul li:nth-child(-n+2) {  /* 1st & 2nd <li> */
+      /*  display: none !important;
+   /* }*/
+    .features {
+        margin-bottom: 300px;
+    }
+}
+#neonPath             { transform-origin: top center; }    /* wichtig! */
+
+/* Mobile / Hochkant  ------------------------------------------------- */
+@media (max-width: 767px){
+    /* 1) SVG höher ziehen  (optional, nur fürs Layout-Feeling) */
+
+
+    /* 2) Pfad selbst vertikal strecken */
+    #neonPath{
+        /* 1951 → ~4000 px  ⇒ Faktor ≈ 2,05 */
+        transform: scaleY(3.05);
+    }
+}
+
+@media (max-width: 767px) {
+
+    /* 1. wrapper fills the screen width */
+    .spline-follower5 {
+        margin-top: 200px;
+        position: relative !important;        /* no fixed pinning on phones   */
+        top: 82%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 100vw;                         /* edge-to-edge */
+        max-width: 100vw;
+        aspect-ratio: 16 / 9;                 /* keeps a nice cinematic ratio */
+        height: auto;                         /* let aspect-ratio rule height */
+
+        border-radius: 0;                     /* flush with the edges         */
+        pointer-events: auto;                 /* keep it interactive          */
+    }
+
+    /* 2. carousel shell expands to match */
+    .spline-follower5 .c {
+        width: 100%;
+        height: 100%;
+        min-width: 100%;                      /* prevents side clipping       */
+        padding: 0;                           /* no inner gaps                */
+        border-radius: 0;
+    }
+
+    /* 3. each slide + image completely fills the shell */
+    .spline-follower5 .ci,
+    .spline-follower5 .ci img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;                    /* crop proportionally          */
+    }
+}
+
+
+   @media (min-width:768px) and (max-width:1024px){
+
+
+
+.faq {
+    display: none;
+}
+    /* 1. wrapper fills the screen width */
+    .spline-follower5 {
+
+        position: relative !important;        /* no fixed pinning on phones   */
+        top: 70%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 90vw;                         /* edge-to-edge */
+        max-width: 90vw;
+        aspect-ratio: 16 / 9;                 /* keeps a nice cinematic ratio */
+        height: auto;                         /* let aspect-ratio rule height */
+
+        border-radius: 0;                     /* flush with the edges         */
+        pointer-events: auto;                 /* keep it interactive          */
+    }
+
+    /* 2. carousel shell expands to match */
+    .spline-follower5 .c {
+        width: 100%;
+        height: 100%;
+        min-width: 100%;                      /* prevents side clipping       */
+        padding: 0;                           /* no inner gaps                */
+        border-radius: 0;
+    }
+
+    /* 3. each slide + image completely fills the shell */
+    .spline-follower5 .ci,
+    .spline-follower5 .ci img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;                    /* crop proportionally          */
+    }
+
+    .nasa-logo {
+        width: 90px;
+        top: 10px;
+        left: 10px;
+    }
+
+    .neon-arrow{
+        left: 47%;                 /* Mitte des Viewports */
+        transform: translateX(-50%); /* exakte Zentrierung */
+    }
+
+
+    .spline-follower3{
+        /* vom “festen” Scene-2-Layout entkoppeln … */
+        position:fixed  ;          /* bezieht sich jetzt auf .overlay */
+        z-index: 9000;              /* oberhalb der übrigen Overlay-Elemente */
+        margin: 10vh auto 0;
+        /*  im oberen Drittel der Viewport-Höhe platzieren  */
+        top: 26%;                   /* vertikale Lage als Anteil der Viewport-Höhe */
+        left: 50%;
+        transform: translate(-50%,-50%);  /* sauber zentrieren */
+
+        /*  Responsive Größen rein prozentual / view-*  */
+        width: 130vw;                /* fast volle Breite – mit seitlichem Rand */
+        max-width: 600px;           /* Schutz-Limit für große Phablets */
+        aspect-ratio: 16 / 9;       /* behält Proportionen bei */
+        height: auto;               /* ergibt sich über aspect-ratio */
+
+        /*  Rahmen & Glow kannst du natürlich beibehalten … */
+        border-radius: .8rem;
+        border: 2px solid #fff;
+        box-shadow:
+                0 0 8px rgba(255,255,255,.4),
+                0 0 12px rgba(0,255,255,.6),
+                0 0 26px rgba(0,200,255,.4);
+
+        /*  Optional: Shadow im Hochkant etwas sanfter  */
+        filter: drop-shadow(0 0 15px var(--clr-neon));
+
+        /*  Pointer-Events bleiben aktiv, falls du etwas anklicken musst  */
+        pointer-events: auto;
+    }
+
+
+
+
+    .spline-follower2
+    {
+        filter:drop-shadow(0 0 25px var(--clr-neon));
+        position: relative !important;
+        width: 100% !important;
+        height: 70vh !important;
+        left: 0 !important;
+        top: 0 !important;
+        transform: none !important;
+        margin: 30px auto !important;
+
+        border-radius: 16px;
+        overflow: hidden;
+
+    }
+
+
+       .typewriter{
+           /* Position */
+           top: 13vh;                     /* näher an den Rand als 15 vw   */
+           left: 50%;
+           transform: translateX(-50%);
+
+           /* Typografie */
+           font-size: 2.3rem;            /* etwas größer als Phone size   */
+
+           /* Breite + Animation */
+           width: 70%;                   /* fixe Endbreite → kein „Springen“ */
+           white-space: nowrap;          /* bleibt einzeilig              */
+           animation: typing-tab-sm 2.8s steps(24,end) forwards,
+           lights 4s linear infinite;
+       }
+
+       @keyframes typing-tab-sm   { from { width: 0; } to { width: 70%; } }
+
+    @keyframes lights-mobile {
+        0%, 100% {
+            color: hsl(230, 40%, 80%);
+            text-shadow: 0 0 0.5em hsla(230,100%,85%,0.7);
+        }
+        50% {
+            color: hsl(230, 80%, 90%);
+            text-shadow: 0 0 0.8em hsla(230,100%,85%,0.9);
+        }
+    }
+    /* Glasses details */
+    .glasses-details {
+        margin-top: 300px;
+        transform: none;
+        padding: 15px;
+    }
+
+    .glasses-details h3 {
+        font-size: 3rem;
+
+    }
+
+    .glasses-details table {
+        font-size: 1.5rem;
+    }
+
+
+    /* Neon button */
+    .neon-button {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin: 20px auto;
+        display: block;
+        font-size: 10rem;
+        padding: 15px 30px;
+        width: 80%;
+        text-align: center;
+    }
+
+    /* Testimonials */
+    .testimonials {
+        transform: none;
+        padding: 30px 20px;
+        display: none;
+    }
+    .faq {
+        display: none;
+    }
+
+
+    .spline-follower{
+
+
+        width: 35vw; /* was 100vw */
+        left: 100%;
+
+    }
+
+    /* 3-D viewer wrapper -------------------------------------------- */
+    .spline-follower4 {
+        position: fixed;                 /* stay on top of the scroll */
+        top: 55%;                        /* roughly mid-screen */
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-bottom: 10px;
+
+        width: 99vw;                     /* responsive, almost full */
+        max-width: 800px;                /* safety cap */
+        aspect-ratio: 16 / 9;            /* keeps the Spline clean */
+
+        border: 2px solid #fff;
+        border-radius: 3rem;
+        box-shadow:
+                0 0 6px rgba(255,255,255,.4),
+                0 0 14px rgba(0,255,255,.5);
+        overflow: hidden;                /* crops the canvas bleed */
+        z-index: 7;
+    }
+    .features {
+        margin-bottom: 300px;
+    }
+
+    /* make sure the viewer fills the shell */
+    .spline-follower4 spline-viewer,
+    .spline-follower4 canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        pointer-events: auto;
+    }
+
+    .features{
+        /* vorhandenes Padding kannst du beibehalten */
+        padding: 4rem 2rem;
+        /* sorgt dafür, dass der UL-Block exakt mittig sitzt */
+        display: flex;
+        justify-content: center;
+    }
+
+    /* (2) UL als flex-Grid begrenzen und mittig ausrichten */
+    .features > ul{
+        display: flex;
+
+        flex-wrap: wrap;
+        gap: var(--gap);
+        justify-content: center;       /* horizontal bündig  */
+        max-width: 60rem;              /* 👉 breiter View = gleichmäßige Zeilen */
+        margin: 0 auto;                /* wirklich mittig    */
+        padding: 0;                    /* Browser-Default rausnehmen */
+        list-style: none;              /* bullets entfernen  */
+    }
+
+    /* (3) Einzelne Karten gleich groß & Inhalt zentriert   */
+    .features li{
+        flex: 0 1 18rem;
+       /* feste Kartengröße  */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;            /* Headline + Text    */
+        padding: 2rem;
+        border-radius: .5rem;
+    }
+       .features li h3,
+       .features li p {
+           color: var(--clr-typewriter); /* hsl(230,40%,80%) wie im lights-Keyframe */
+           font-size: 28px;
+       }
+
+
+
+
+       /* (4) Icon exakt mittig – egal, ob Bild oder Emoji     */
+    .features .icon{
+        width: 6rem;
+        height: 6rem;
+        margin: 0 0 1rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+
+
+    /* neon CTA button ----------------------------------------------- */
+    .spline-follower4 .neon-button {
+        position: absolute;
+        bottom: 2%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        padding: 0.6rem 0.5rem;
+        border-radius: 500px;
+    }
+
+    .nasa-cta-container {
+        /* stay fixed, but centre horizontally and sit a bit lower */
+        position: fixed;
+        top: 40%;
+        left: 8%;
+
+
+
+        width: 100vw;          /* almost full width */
+        max-width: 400px;     /* safety cap on large phones */
+        padding: 1.25rem 1rem;
+
+        /* subtler glow on small screens */
+        box-shadow:
+                0 0 6px  rgba(0,150,255,0.35),
+                0 0 16px rgba(0,150,255,0.25);
+    }
+
+    /* slightly smaller text */
+    .nasa-cta-text h4       { font-size: 1.8rem; }
+    .nasa-cta-text .tagline { font-size: 1.2rem;   }
+
+    /* buttons: slimmer pills */
+    .cta-buttons .btn {
+        font-size: 1.2rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+    }
+    /* ---------- Mobile-Feinschliff ----------------------- */
+
+        .features > ul{
+            max-width: 100%;           /* volle Breite nutzen */
+        }
+        .features li{
+            flex: 1 1 100%;            /* Karten stapeln      */
+        }
+
+
+    .astronaut {
+
+        width: 150px;
+        border-radius: 1em;
+        top: 25%; /* Adjust as needed */
+        transform: rotate(5deg);
+        animation:
+                bob 5s ease-in-out infinite,
+                rotateZ 5s ease-in-out infinite;
+        opacity: 1;
+        z-index: 5;
+        pointer-events: none;
+        filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+    }
+}
+
+
+@media (min-width:1024px) and (max-width:1279px){
+
+
+
+    .faq {
+        display: none;
+    }
+    /* 1. wrapper fills the screen width */
+    .spline-follower5 {
+
+        position: relative !important;        /* no fixed pinning on phones   */
+        top: 70%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 100vw;                         /* edge-to-edge */
+        max-width: 95vw;
+        aspect-ratio: 16 / 9;                 /* keeps a nice cinematic ratio */
+        height: auto;                         /* let aspect-ratio rule height */
+
+        border-radius: 0;                     /* flush with the edges         */
+        pointer-events: auto;                 /* keep it interactive          */
+    }
+
+    /* 2. carousel shell expands to match */
+    .spline-follower5 .c {
+        width: 100%;
+        height: 100%;
+        min-width: 100%;                      /* prevents side clipping       */
+        padding: 0;                           /* no inner gaps                */
+        border-radius: 0;
+    }
+
+    /* 3. each slide + image completely fills the shell */
+    .spline-follower5 .ci,
+    .spline-follower5 .ci img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;                    /* crop proportionally          */
+    }
+
+    .nasa-logo {
+        width: 90px;
+        top: 10px;
+        left: 10px;
+    }
+
+    .neon-arrow{
+        left: 47%;                 /* Mitte des Viewports */
+        transform: translateX(-50%); /* exakte Zentrierung */
+    }
+
+
+    .spline-follower3{
+        /* vom “festen” Scene-2-Layout entkoppeln … */
+        position:fixed  ;          /* bezieht sich jetzt auf .overlay */
+        z-index: 9000;              /* oberhalb der übrigen Overlay-Elemente */
+        margin: 10vh auto 0;
+        /*  im oberen Drittel der Viewport-Höhe platzieren  */
+        top: 26%;                   /* vertikale Lage als Anteil der Viewport-Höhe */
+        left: 50%;
+        transform: translate(-50%,-50%);  /* sauber zentrieren */
+
+        /*  Responsive Größen rein prozentual / view-*  */
+        width: 130vw;                /* fast volle Breite – mit seitlichem Rand */
+        max-width: 600px;           /* Schutz-Limit für große Phablets */
+        aspect-ratio: 16 / 9;       /* behält Proportionen bei */
+        height: auto;               /* ergibt sich über aspect-ratio */
+
+        /*  Rahmen & Glow kannst du natürlich beibehalten … */
+        border-radius: .8rem;
+        border: 2px solid #fff;
+        box-shadow:
+                0 0 8px rgba(255,255,255,.4),
+                0 0 12px rgba(0,255,255,.6),
+                0 0 26px rgba(0,200,255,.4);
+
+        /*  Optional: Shadow im Hochkant etwas sanfter  */
+        filter: drop-shadow(0 0 15px var(--clr-neon));
+
+        /*  Pointer-Events bleiben aktiv, falls du etwas anklicken musst  */
+        pointer-events: auto;
+    }
+
+
+
+
+    .spline-follower2
+    {
+        filter:drop-shadow(0 0 25px var(--clr-neon));
+        position: relative !important;
+        width: 100% !important;
+        height: 65vh !important;
+        left: 0 !important;
+        top: 0 !important;
+        transform: none !important;
+        margin: 30px auto !important;
+
+        border-radius: 16px;
+        overflow: hidden;
+
+    }
+
+
+    /* Typewriter adjustments */
+    .typewriter{
+        top: 10vh;                     /* etwas höher                   */
+        left: 50%;
+        transform: translateX(-50%);
+
+        font-size: 4rem;            /* größer, aber unter Desktop-Größe */
+
+        width: 70%;                   /* schmalere Zielbreite          */
+        white-space: nowrap;
+        animation: typing-tab-lg 2.8s steps(28,end) forwards,
+        lights 4s linear infinite;
+    }
+    @keyframes typing-tab-lg   { from { width: 0; } to { width: 60%; } }
+
+    @keyframes lights-mobile {
+        0%, 100% {
+            color: hsl(230, 40%, 80%);
+            text-shadow: 0 0 0.5em hsla(230,100%,85%,0.7);
+        }
+        50% {
+            color: hsl(230, 80%, 90%);
+            text-shadow: 0 0 0.8em hsla(230,100%,85%,0.9);
+        }
+    }
+    /* Glasses details */
+    .glasses-details {
+        margin-top: 300px;
+        transform: none;
+        padding: 15px;
+    }
+
+    .glasses-details h3 {
+        font-size: 3rem;
+
+    }
+
+    .glasses-details table {
+        font-size: 1.5rem;
+    }
+
+
+    /* Neon button */
+    .neon-button {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin: 20px auto;
+        display: block;
+        font-size: 10rem;
+        padding: 15px 30px;
+        width: 80%;
+        text-align: center;
+    }
+
+    /* Testimonials */
+    .testimonials {
+        transform: none;
+        padding: 30px 20px;
+        display: none;
+    }
+    .faq {
+        display: none;
+    }
+
+
+    .spline-follower{
+
+
+        width: 35vw; /* was 100vw */
+        left: 100%;
+
+    }
+
+    /* 3-D viewer wrapper -------------------------------------------- */
+    .spline-follower4 {
+        position: fixed;                 /* stay on top of the scroll */
+        top: 55%;                        /* roughly mid-screen */
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-bottom: 10px;
+
+        width: 99vw;                     /* responsive, almost full */
+        max-width: 800px;                /* safety cap */
+        aspect-ratio: 16 / 9;            /* keeps the Spline clean */
+
+        border: 2px solid #fff;
+        border-radius: 3rem;
+        box-shadow:
+                0 0 6px rgba(255,255,255,.4),
+                0 0 14px rgba(0,255,255,.5);
+        overflow: hidden;                /* crops the canvas bleed */
+        z-index: 7;
+    }
+    .features {
+        margin-bottom: 300px;
+    }
+
+    /* make sure the viewer fills the shell */
+    .spline-follower4 spline-viewer,
+    .spline-follower4 canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        pointer-events: auto;
+    }
+
+    .features{
+        /* vorhandenes Padding kannst du beibehalten */
+        padding: 4rem 2rem;
+        /* sorgt dafür, dass der UL-Block exakt mittig sitzt */
+        display: flex;
+        justify-content: center;
+    }
+
+    /* (2) UL als flex-Grid begrenzen und mittig ausrichten */
+    .features > ul{
+        display: flex;
+
+        flex-wrap: wrap;
+        gap: var(--gap);
+        justify-content: center;       /* horizontal bündig  */
+        max-width: 60rem;              /* 👉 breiter View = gleichmäßige Zeilen */
+        margin: 0 auto;                /* wirklich mittig    */
+        padding: 0;                    /* Browser-Default rausnehmen */
+        list-style: none;              /* bullets entfernen  */
+    }
+
+    /* (3) Einzelne Karten gleich groß & Inhalt zentriert   */
+    .features li{
+        flex: 0 1 18rem;
+        /* feste Kartengröße  */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;            /* Headline + Text    */
+        padding: 2rem;
+        border-radius: .5rem;
+    }
+    .features li h3,
+    .features li p {
+        color: var(--clr-typewriter); /* hsl(230,40%,80%) wie im lights-Keyframe */
+        font-size: 30px;
+    }
+
+
+
+
+    /* (4) Icon exakt mittig – egal, ob Bild oder Emoji     */
+    .features .icon{
+        width: 6rem;
+        height: 6rem;
+        margin: 0 0 1rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+
+
+    /* neon CTA button ----------------------------------------------- */
+    .spline-follower4 .neon-button {
+        position: absolute;
+        bottom: 2%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        padding: 0.6rem 0.5rem;
+        border-radius: 500px;
+    }
+
+    .nasa-cta-container {
+        /* stay fixed, but centre horizontally and sit a bit lower */
+        position: fixed;
+        top: 40%;
+        left: 8%;
+
+
+
+        width: 100vw;          /* almost full width */
+        max-width: 400px;     /* safety cap on large phones */
+        padding: 1.25rem 1rem;
+
+        /* subtler glow on small screens */
+        box-shadow:
+                0 0 6px  rgba(0,150,255,0.35),
+                0 0 16px rgba(0,150,255,0.25);
+    }
+
+    /* slightly smaller text */
+    .nasa-cta-text h4       { font-size: 1.8rem; }
+    .nasa-cta-text .tagline { font-size: 1.2rem;   }
+
+    /* buttons: slimmer pills */
+    .cta-buttons .btn {
+        font-size: 1.2rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+    }
+    /* ---------- Mobile-Feinschliff ----------------------- */
+
+    .features > ul{
+        max-width: 100%;           /* volle Breite nutzen */
+    }
+    .features li{
+        flex: 1 1 100%;            /* Karten stapeln      */
+    }
+
+
+    .astronaut {
+
+        width: 150px;
+        border-radius: 1em;
+        top: 25%; /* Adjust as needed */
+        transform: rotate(5deg);
+        animation:
+                bob 5s ease-in-out infinite,
+                rotateZ 5s ease-in-out infinite;
+        opacity: 1;
+        z-index: 5;
+        pointer-events: none;
+        filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+    }
+}

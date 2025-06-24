@@ -1,0 +1,538 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>3D Star‑Warp Effect</title>
+        <link rel="stylesheet" href="styles.css" />
+
+
+    </head>
+    <body>
+
+    <!-- background canvas -->
+    <div class="scene-container"></div>
+
+
+    <!-- floating astronaut -->
+
+
+    <!--  Scene 1  -->
+    <div class="overlay">
+<div class="spline-follower2" >
+
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.2/build/spline-viewer.js"></script>
+    <spline-viewer loading-anim-type="spinner-small-light" url="https://prod.spline.design/9PzHdXMrdcBxFoMA/scene.splinecode"></spline-viewer>
+</div>
+        <img src="nasa.png"
+             alt="NASA logo"
+             class="nasa-logo"   loading="lazy"/>
+
+        <h1 class="typewriter">MISSION SUNGLASSES</h1>
+        <br>
+
+      <br>
+        <br>
+
+       <a href="#features">  <svg class="neon-arrow" viewBox="0 0 16 16" aria-label="Mehr anzeigen" id="scrollArrow">
+            <path d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
+        </svg>
+
+
+       </a>
+
+
+        <div id="exploreBtn">
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ───────── Scene 2 ───────── -->
+    <div class="scene-2" id="scene-2">
+
+        <section class="features" id="features">
+
+            <ul>
+                <li>
+                    <img class="icon" src="img_2.png" alt="Ultralight" />
+                    <h3>Safety</h3>
+                    <p>Excellent for every weather condition</p>
+                </li>
+                <li>
+                    <img class="icon" src="img_4.png" alt="UV Protection 400" />
+                    <h3>UV Protection 400</h3>
+                    <p>Protects your eyes from  harmful rays</p>
+                </li>
+                <li>
+                    <img class="icon" src="img_5.png" alt="NASA-tested" />
+                    <h3>NASA-tested</h3>
+                    <p>Durable  in real spaceflight conditions</p>
+                </li>
+            </ul>
+            <br>
+        </section>
+
+
+        <!-- neon SVG path -->
+        <svg viewBox="0 0 948 1951" preserveAspectRatio="xMidYMid meet" id="path">
+            <defs>
+                <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="g" />
+                    <feBlend in2="g" mode="screen" />
+                </filter>
+                <radialGradient id="path-glow" cx="50%" cy="50%" r="50%">
+                    <animate attributeName="r" values="50%;100%;50%" dur="2s" repeatCount="indefinite"/>
+                    <stop offset="0%"   stop-color="hsl(230,100%,85%)"/>
+                    <stop offset="100%" stop-color="hsl(230,100%,85%)" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+            <path class="neon-path" id="neonPath"
+                  d="M25 1.5C235.951 542.875 916.206 442.056 936 620.5C955.794 798.944 75.9902 839.962 25 1028C-25.9902 1216.04 585.074 1558.83 880 1600C1174.93 1641.17 386.476 1957.08 0.999985 1947.5"
+                  filter="url(#neon-glow)" stroke="url(#path-glow)" stroke-width="4"
+                  stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div id="splineFollower" class="spline-follower">
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.2/build/spline-viewer.js"></script>
+            <spline-viewer url="https://prod.spline.design/DLJtAlcpdFQTVWyv/scene.splinecode"></spline-viewer>
+        </div>
+
+
+        <div class="spline-follower3" id="spline-follower3" >
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.2/build/spline-viewer.js"></script>
+            <spline-viewer loading-anim-type="spinner-big-dark" url="https://prod.spline.design/iyoCUHeCC5POWoJR/scene.splinecode"></spline-viewer>
+        </div>
+
+        <!-- CTA-Bereich -->
+        <div class="nasa-cta-container hidden" id="nasaCta">
+            <!-- Text column -->
+            <div class="nasa-cta-text">
+                <h4>NASA Sunglasses</h4>
+                <p class="tagline">
+                    Limited Astronaut Edition.<br>
+                    Ultimate UV Protection in Zero Gravity.
+                </p>
+                <img src="astronaut.png" class="astronaut" alt="Floating Astronaut">
+            </div>
+
+            <!-- Action buttons -->
+            <div class="cta-buttons">
+                <a href="#splineAnchor" class="btn primary" id="shopBtn">Buy Now</a>
+                <a href="https://www.nasa.gov"
+                   target="_blank"
+                   class="btn secondary">Learn More</a>
+            </div>
+        </div>
+
+
+        <!-- anchor + Spline viewer -->
+            <a id="splineAnchor"></a>
+
+        <div class="spline-follower4" id="splineBox">
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.2/build/spline-viewer.js"></script>
+            <spline-viewer loading-anim-type="none" url="https://prod.spline.design/idHkLaXJWhaoAgkU/scene.splinecode"></spline-viewer>
+
+            <a href="#" class="neon-button" >Buy Model</a>
+
+    </div>
+
+
+
+        <div class="spline-follower5" id="splineBox2">
+            <div class="c">
+
+
+
+                    <div class="ci" style="--z: 4">
+                        <h2 class="ch" style="--h: 32; --s: 80%; --l: 90%"></h2>
+                        <img src="img_6.png" alt="Snow on leafs" width="1024" height="1024">
+                    </div>
+
+
+
+                    <div class="ci" style="--z: 3">
+                        <h2 class="ch" style="--h: 82; --s: 80%; --l: 90%"></h2>
+                        <img src="img_8.png" alt="Trees">
+                    </div>
+
+
+
+                    <div class="ci" style="--z: 2">
+                        <h2 class="ch" style="--h: 40; --s: 100%; --l: 89%"></h2>
+                        <img src="img_6.png" alt="Mountains and houses">
+                    </div>
+
+
+            </div>
+
+
+
+
+            </div>
+
+        <div>
+            <section class="glasses-details">
+                <h3>Glasses Details </h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Weight</td>
+                        <td>Ultra-light – only 18 g (titanium composite)</td>
+                    </tr>
+                    <tr>
+                        <td>UV Protection</td>
+                        <td>UV 400 (blocks 100 % of UVA/UVB)</td>
+                    </tr>
+
+
+                    <!-- new features -->
+                    <tr>
+                        <td>Night Vision</td>
+                        <td>Built-in low-light night vision capability</td>
+                    </tr>
+                    <tr>
+                        <td>Integrated Chatbot</td>
+                        <td>On-device AI chatbot for hands-free assistance</td>
+                    </tr>
+                    <tr>
+                        <td>AI Vision</td>
+                        <td>Real-time AI-powered visual enhancements</td>
+                    </tr>
+                    <tr>
+                        <td>Video &amp; Photo Capture</td>
+                        <td>High-definition video and photo recording</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+
+            <section class="testimonials" id="testimonials">
+                <br>
+                <br>
+
+                <h2>What Customers Are Saying</h2>
+                <blockquote>
+                    “Incredibly comfortable and stylish — I wear them every day!”
+                    <cite>– Anna M.</cite>
+                </blockquote>
+                <blockquote>
+                    “Perfect for the beach and the next space mission.”
+                    <cite>– Lars K.</cite>
+                </blockquote>
+            </section>
+
+        </div>
+
+
+
+        <section class="faq" id="faq">
+            <h2>Frequently Asked Questions</h2>
+            <details>
+                <summary>How long is the delivery time?</summary>
+                <p>Standard 3–5 business days, express option available.</p>
+            </details>
+            <details>
+                <summary>Money-back guarantee?</summary>
+                <p>Yes, within 30 days with no questions asked.</p>
+            </details>
+            <details>
+                <summary>Payment methods?</summary>
+                <p>Credit card, PayPal, Apple Pay, Google Pay.</p>
+            </details>
+        </section>
+
+
+        <footer class="nasa-footer">
+        <div class="footer-links">
+            <!-- …their columns of links… -->
+        </div>
+
+
+
+        <div class="footer-bottom">
+            <p>© 2025 NASA. All rights reserved</p>
+            <p>
+                <a href="/privacy">Privacy Policy</a> |
+                <a href="/accessibility">Accessibility</a> |
+                <a href="/foia">FOIA</a>
+            </p>
+        </div>
+    </footer>
+
+
+
+
+
+    <!-- libs -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollToPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/MotionPathPlugin.min.js"></script>
+
+
+
+    <script>
+        /* –––––––––  Grab buttons once, right after HTML is parsed  –––––––– */
+        const exploreBtn = document.getElementById('exploreBtn');
+        const shopBtn = document.getElementById('shopBtn');
+
+        /* –––––––––  Star‑field (unchanged)  –––––––– */
+        (() => {
+            const scene = new THREE.Scene(),
+                cam = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 1, 1e4);
+            cam.position.z = 1;
+            cam.rotation.x = Math.PI / 2;
+            const ren = new THREE.WebGLRenderer({alpha: true});
+            ren.setSize(innerWidth, innerHeight);
+            ren.setPixelRatio(devicePixelRatio);
+            ren.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.querySelector('.scene-container').appendChild(ren.domElement);
+
+            const geo = new THREE.BufferGeometry(), count = 800, pos = new Float32Array(count * 3),
+                vel = Array.from({length: count}, () => ({v: 0, a: .02}));
+            for (let i = 0; i < count; i++) {
+                pos[i * 3] = Math.random() * 600 - 300;
+                pos[i * 3 + 1] = Math.random() * 600 - 300;
+                pos[i * 3 + 2] = Math.random() * 600 - 300;
+            }
+            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            const sprite = new THREE.TextureLoader().load(
+                    'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/sprites/disc.png'),
+                mat = new THREE.PointsMaterial({
+                    color: 0xaaaaaa, size: 1.6, map: sprite, transparent: true,
+                    alphaTest: .1, depthWrite: false, blending: THREE.AdditiveBlending
+                });
+            const stars = new THREE.Points(geo, mat);
+            scene.add(stars);
+
+            const loop = () => {
+                const a = stars.geometry.attributes.position.array;
+                vel.forEach((o, i) => {
+                    o.v += o.a;
+                    a[i * 3 + 1] -= o.v;
+                    if (a[i * 3 + 1] < -200) {
+                        a[i * 3 + 1] = 200;
+                        o.v = 0
+                    }
+                });
+                stars.geometry.attributes.position.needsUpdate = true;
+                stars.rotation.y += .002;
+                ren.render(scene, cam);
+                requestAnimationFrame(loop)
+            };
+            loop();
+
+            addEventListener('resize', () => {
+                cam.aspect = innerWidth / innerHeight;
+                cam.updateProjectionMatrix();
+                ren.setSize(innerWidth, innerHeight)
+            });
+        })();
+
+        gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+        /* ------------------------------------------------------------------ */
+        /* ONE factory that builds the TL                                      */
+        /* ------------------------------------------------------------------ */
+        function buildNeonTL({ scaleY = 1 }) {
+
+            /* 1) reset / apply the scale to the path ------------------------- */
+            gsap.set("#neonPath", { clearProps: "transform" });          // wipe
+            gsap.set("#neonPath", { scaleY, transformOrigin: "top left" });
+
+            /* 2) recalc length (≈ dasharray) -------------------------------- */
+            const neonPath = document.querySelector("#neonPath");
+            const len      = neonPath.getTotalLength() * scaleY;         // compensate scale
+
+            /* 3) build – identical to your original code -------------------- */
+            gsap.timeline({
+                scrollTrigger:{
+                    trigger     : "#path",
+                    start       : "top 35%",
+                    endTrigger  : "#testimonials",
+                    end         : "bottom bottom",
+                    scrub       : .15
+                },
+                defaults:{ ease:"none" }
+            })
+                .fromTo("#neonPath",
+                    { strokeDasharray: len, strokeDashoffset: len },
+                    { strokeDashoffset: 0 }, 0)
+                .set("#splineFollower", { xPercent: -50, yPercent: -50 }, 0)
+                .to("#splineFollower", {
+                    motionPath:{
+                        path        : "#neonPath",
+                        align       : "#neonPath",
+                        alignOrigin : [ .5, .5 ],
+                        offsetX     : -26,
+                        offsetY     :  9 * scaleY        // <- compensate Y-scale
+                    }
+                }, 0);
+        }
+
+        /* ------------------------------------------------------------------ */
+        /* MatchMedia – desktop vs. mobile                                    */
+        /* ------------------------------------------------------------------ */
+        gsap.matchMedia()
+            .add("(max-width: 767px)", () => buildNeonTL({ scaleY: 3.05 }))  // mobile
+            .add("(min-width: 768px)", () => buildNeonTL({ scaleY: 1    })); // desktop
+
+        /* CTA stays up for most of Scene 2 */
+    gsap.fromTo('#nasaCta',
+    {
+
+    x: '-100vw',
+    opacity: 0,
+    pointerEvents: 'none'
+    },
+    {
+    x: '0vw',
+    opacity: 1,
+    pointerEvents: 'auto',
+    ease: 'power3.out',
+    scrollTrigger: {
+    trigger: '#path',
+
+    start: 'top 50%',
+    end: 'top 20%',
+
+    scrub: 0.5, // sanftere Animation
+    fastScrollEnd: true // schnell ins Ende springen
+
+
+    }
+    }
+    );
+        gsap.fromTo('#splineBox',
+            {
+                x: '100vw', // start a full viewport‑width off screen to the right
+                opacity: 0,
+                pointerEvents: 'none'
+            },
+            {
+                x: '0vw', // end at its natural position
+                opacity: 1,
+
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '#splineBox',    // ← now uses its own trigger
+                    start:   'top 81%',        // tweak until it lines up
+                    end:     'top 60%',
+                    scrub: 0.5,         // sanftere Animation
+                    fastScrollEnd: true // schnell ins Ende springen
+
+
+                }
+            }
+        );
+
+
+
+
+
+        gsap.fromTo(
+            '#splineBox2',
+            { x: '-300%' ,
+                pointerEvents: 'auto'},
+            {
+                x: '0%',
+
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '#splineBox2',
+                    start: 'top 35%',
+                    end: 'top 80%',
+                    scrub: 3,         // sanftere Animation
+
+
+
+                    toggleActions: 'play none none reverse',
+
+                }
+            }
+        );
+
+
+        /* Shop Now smooth scroll */
+        shopBtn.addEventListener('click',e=>{
+            e.preventDefault();
+            gsap.to(window,{duration:1.2,scrollTo:{y:'#splineAnchor',offsetY:50}});
+        });
+
+        // ← Make sure this runs after you register ScrollTrigger, etc.
+        // Example (somewhere after your existing GSAP code):
+
+
+    </script>
+
+    <script>
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                entry.target.classList.toggle('show', entry.isIntersecting);
+            });
+        }, { threshold: 0.1 });
+
+        // observe the CTA container by its ID
+        observer.observe(document.getElementById('nasaCta'));
+        observer.observe(document.getElementById('splineBox'));
+        observer.observe(document.getElementById('n-th-child'));
+        observer.observe(document.getElementById('splineBox2'));
+
+
+
+
+
+
+
+    </script>
+
+        <script>
+            (() => {
+                const STEP = 45;
+                let tween;
+
+                gsap.registerPlugin(ScrollToPlugin);
+
+                // clamp factory
+                const clamp = gsap.utils.clamp(
+                    0,
+                    () => document.documentElement.scrollHeight - window.innerHeight
+                );
+
+                window.addEventListener('wheel', e => {
+                    const dir  = Math.sign(e.deltaY);
+                    const curY = window.scrollY;
+                    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+                    const next = clamp(curY + dir * STEP);
+
+                    // if no actual movement (you're at an edge), do nothing special
+                    if (next === curY) {
+                        return; // let native scroll/bounce happen
+                    }
+
+                    // otherwise hijack
+                    e.preventDefault();
+                    tween && tween.kill();
+                    tween = gsap.to(window, {
+                        duration: 0.5,
+                        scrollTo: { y: next, autoKill: false },
+                        ease: 'power3.out'
+                    });
+                }, { passive: false });
+            })();
+        </script>
+
+
+    </body>
+    </html>
